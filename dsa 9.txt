@@ -1,0 +1,65 @@
+# Dictionary to store keywords and meanings
+keyword_dict = {}
+
+def add_keyword():
+    keyword = input("Enter keyword to add: ")
+    if keyword in keyword_dict:
+        print("Keyword already exists.")
+    else:
+        meaning = input("Enter meaning: ")
+        keyword_dict[keyword] = meaning
+        print("Keyword added successfully.")
+
+def delete_keyword():
+    keyword = input("Enter keyword to delete: ")
+    if keyword in keyword_dict:
+        del keyword_dict[keyword]
+        print("Keyword deleted successfully.")
+    else:
+        print("Keyword not found.")
+
+def update_keyword():
+    keyword = input("Enter keyword to update: ")
+    if keyword in keyword_dict:
+        meaning = input("Enter new meaning: ")
+        keyword_dict[keyword] = meaning
+        print("Keyword updated successfully.")
+    else:
+        print("Keyword not found.")
+
+def display_keywords():
+    if not keyword_dict:
+        print("No keywords to display.")
+    else:
+        print("\nCurrent Keywords and Meanings:")
+        for keyword, meaning in keyword_dict.items():
+            print(f"{keyword}: {meaning}")
+        print()
+
+def main():
+    while True:
+        print("\n--- Keyword Dictionary Menu ---")
+        print("1. Add Keyword")
+        print("2. Delete Keyword")
+        print("3. Update Keyword")
+        print("4. Display Keywords")
+        print("5. Exit")
+        
+        choice = input("Enter your choice (1-5): ")
+
+        if choice == '1':
+            add_keyword()
+        elif choice == '2':
+            delete_keyword()
+        elif choice == '3':
+            update_keyword()
+        elif choice == '4':
+            display_keywords()
+        elif choice == '5':
+            print("Exiting program.")
+            break
+        else:
+            print("Invalid choice. Please enter a number between 1 and 5.")
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,59 @@
+public class OptimalBST {
+
+    public static void optimalBST(double[] p, int n) {
+        double[][] e = new double[n + 2][n + 1];
+        double[][] w = new double[n + 2][n + 1];
+        int[][] root = new int[n + 1][n + 1];
+
+        // Initialization
+        for (int i = 1; i <= n + 1; i++) {
+            e[i][i - 1] = 0;
+            w[i][i - 1] = 0;
+        }
+
+        // DP computation
+        for (int l = 1; l <= n; l++) { // length of the chain
+            for (int i = 1; i <= n - l + 1; i++) {
+                int j = i + l - 1;
+                e[i][j] = Double.MAX_VALUE;
+                w[i][j] = w[i][j - 1] + p[j - 1];
+                for (int r = i; r <= j; r++) {
+                    double t = e[i][r - 1] + e[r + 1][j] + w[i][j];
+                    if (t < e[i][j]) {
+                        e[i][j] = t;
+                        root[i][j] = r;
+                    }
+                }
+            }
+        }
+
+        System.out.println("Minimum expected cost: " + e[1][n]);
+        System.out.println("Constructed Optimal BST (inorder): ");
+        printTree(root, 1, n, null, false);
+    }
+
+    // Helper method to print the BST structure
+    private static void printTree(int[][] root, int i, int j, Integer parent, boolean isLeft) {
+        if (i > j) return;
+
+        int r = root[i][j];
+        if (parent == null) {
+            System.out.println("Root: k" + r);
+        } else if (isLeft) {
+            System.out.println("Left child of k" + parent + ": k" + r);
+        } else {
+            System.out.println("Right child of k" + parent + ": k" + r);
+        }
+
+        printTree(root, i, r - 1, r, true);
+        printTree(root, r + 1, j, r, false);
+    }
+
+    public static void main(String[] args) {
+        // Example input
+        int n = 4;
+        double[] p = {0.1, 0.2, 0.4, 0.3};  // probabilities for keys k1 to k4
+
+        optimalBST(p, n);
+    }
+}
